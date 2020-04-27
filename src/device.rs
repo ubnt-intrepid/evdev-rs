@@ -61,12 +61,30 @@ impl Device {
         }
     }
 
-    string_getter!(name, libevdev_get_name,
-                   phys, libevdev_get_phys,
-                   uniq, libevdev_get_uniq);
-    string_setter!(set_name, libevdev_set_name,
-                   set_phys, libevdev_set_phys,
-                   set_uniq, libevdev_set_uniq);
+    string_getter!(
+        /// Retrieve the device's name, either as set by the caller
+        /// or as read from the kernel.
+        name => libevdev_get_name;
+
+        /// Retieve the device's physical location, either as set
+        /// by the caller or as read from the kernel.
+        phys => libevdev_get_phys;
+
+        /// Retrieve the device's unique identifier, either as set
+        /// by the caller or as read from the kernel.
+        uniq => libevdev_get_uniq;
+    );
+
+    string_setter!(
+        /// Change the device's name as returned by `name`.
+        set_name => libevdev_set_name;
+
+        /// Change the device's physical location as returned by `phys`.
+        set_phys => libevdev_set_phys;
+
+        /// Change the device's unique identifier as returned by `uniq`.
+        set_uniq => libevdev_set_uniq;
+    );
 
     /// Returns the file associated with the device
     ///
@@ -354,15 +372,33 @@ impl Device {
         }
     }
 
-    product_getter!(product_id, libevdev_get_id_product,
-                    vendor_id, libevdev_get_id_vendor,
-                    bustype, libevdev_get_id_bustype,
-                    version, libevdev_get_id_version);
+    product_getter!(
+        /// Return the device's product ID.
+        product_id => libevdev_get_id_product;
 
-    product_setter!(set_product_id, libevdev_set_id_product,
-                    set_vendor_id, libevdev_set_id_vendor,
-                    set_bustype, libevdev_set_id_bustype,
-                    set_version, libevdev_set_id_version);
+        /// Return the device's vendor ID.
+        vendor_id => libevdev_get_id_vendor;
+
+        /// Return the device's bus type.
+        bustype => libevdev_get_id_bustype;
+
+        /// Return the device's firmware version.
+        version => libevdev_get_id_version;
+    );
+
+    product_setter!(
+        /// Set the value of product ID to this device.
+        set_product_id => libevdev_set_id_product;
+
+        /// Set the value of vendor ID to this device.
+        set_vendor_id => libevdev_set_id_vendor;
+
+        /// Set the value of bus type to this device.
+        set_bustype => libevdev_set_id_bustype;
+
+        /// Set the value of firmware version to this device.
+        set_version => libevdev_set_id_version;
+    );
 
     /// Return the driver version of a device already intialize with `set_fd`
     pub fn driver_version(&self) -> i32 {
@@ -371,17 +407,49 @@ impl Device {
         }
     }
 
-    abs_getter!(abs_minimum, libevdev_get_abs_minimum,
-                abs_maximum, libevdev_get_abs_maximum,
-                abs_fuzz, libevdev_get_abs_fuzz,
-                abs_flat, libevdev_get_abs_flat,
-                abs_resolution, libevdev_get_abs_resolution);
+    abs_getter!(
+        /// Get the minimum axis value for the given axis,
+        /// as advertised by the kernel.
+        abs_minimum => libevdev_get_abs_minimum;
 
-    abs_setter!(set_abs_minimum, libevdev_set_abs_minimum,
-                set_abs_maximum, libevdev_set_abs_maximum,
-                set_abs_fuzz, libevdev_set_abs_fuzz,
-                set_abs_flat, libevdev_set_abs_flat,
-                set_abs_resolution, libevdev_set_abs_resolution);
+        /// Get the maximum axis value for the given axis,
+        /// as advertised by the kernel.
+        abs_maximum => libevdev_get_abs_maximum;
+
+        /// Get the axis fuzz for the given axis,
+        /// as advertised by the kernel.
+        abs_fuzz => libevdev_get_abs_fuzz;
+
+        /// Get the axis flat for the given axis,
+        /// as advertised by the kernel.
+        abs_flat => libevdev_get_abs_flat;
+
+        /// Get the axis resolution for the given axis,
+        /// as advertised by the kernel.
+        abs_resolution => libevdev_get_abs_resolution;
+    );
+
+    abs_setter!(
+        /// Change the minimum for the given `EV_ABS` event code,
+        /// if the code exists.
+        set_abs_minimum => libevdev_set_abs_minimum;
+
+        /// Change the maximum for the given `EV_ABS` event code,
+        /// if the code exists.
+        set_abs_maximum => libevdev_set_abs_maximum;
+
+        /// Change the fuzz for the given `EV_ABS` event code,
+        /// if the code exists.
+        set_abs_fuzz => libevdev_set_abs_fuzz;
+
+        /// Change the flat for the given `EV_ABS` event code,
+        /// if the code exists.
+        set_abs_flat => libevdev_set_abs_flat;
+
+        /// Change the resolution for the given `EV_ABS` event code,
+        /// if the code exists.
+        set_abs_resolution => libevdev_set_abs_resolution;
+    );
 
     /// Return the current value of the code for the given slot.
     ///

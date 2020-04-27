@@ -1,6 +1,12 @@
 macro_rules! string_getter {
-    ( $( $func_name:ident, $c_func: ident ),* ) => {
+    (
         $(
+            $(#[$attrs:meta])*
+            $func_name:ident => $c_func:ident;
+        )*
+    ) => {
+        $(
+            $(#[$attrs])*
             pub fn $func_name (&self) -> Option<&str> {
                 ptr_to_str(unsafe {
                     raw::$c_func(self.raw)
@@ -11,8 +17,14 @@ macro_rules! string_getter {
 }
 
 macro_rules! string_setter {
-    ( $( $func_name:ident, $c_func: ident ),* ) => {
+    (
         $(
+            $(#[$attrs:meta])*
+            $func_name:ident => $c_func:ident;
+        )*
+    ) => {
+        $(
+            $(#[$attrs])*
             pub fn $func_name (&self, field: &str) {
                 let field = CString::new(field).unwrap();
                 unsafe {
@@ -24,8 +36,14 @@ macro_rules! string_setter {
 }
 
 macro_rules! product_getter {
-    ( $( $func_name:ident, $c_func: ident ),* ) => {
+    (
         $(
+            $(#[$attrs:meta])*
+            $func_name:ident => $c_func:ident;
+        )*
+    ) => {
+        $(
+            $(#[$attrs])*
             pub fn $func_name (&self) -> u16 {
                 unsafe {
                     raw::$c_func(self.raw) as u16
@@ -36,8 +54,14 @@ macro_rules! product_getter {
 }
 
 macro_rules! product_setter {
-    ( $( $func_name:ident, $c_func: ident ),* ) => {
+    (
         $(
+            $(#[$attrs:meta])*
+            $func_name:ident => $c_func:ident;
+        )*
+    ) => {
+        $(
+            $(#[$attrs])*
             pub fn $func_name (&self, field: u16) {
                 unsafe {
                     raw::$c_func(self.raw, field as c_int);
@@ -48,8 +72,14 @@ macro_rules! product_setter {
 }
 
 macro_rules! abs_getter {
-    ( $( $func_name:ident, $c_func: ident ),* ) => {
+    (
         $(
+            $(#[$attrs:meta])*
+            $func_name:ident => $c_func:ident;
+        )*
+    ) => {
+        $(
+            $(#[$attrs])*
             pub fn $func_name (&self,
                                code: u32) -> std::io::Result<i32> {
                 let result = unsafe {
@@ -66,8 +96,14 @@ macro_rules! abs_getter {
 }
 
 macro_rules! abs_setter {
-    ( $( $func_name:ident, $c_func: ident ),* ) => {
+    (
         $(
+            $(#[$attrs:meta])*
+            $func_name:ident => $c_func:ident;
+        )*
+    ) => {
+        $(
+            $(#[$attrs])*
             pub fn $func_name (&self,
                                code: u32,
                                val: i32) {
